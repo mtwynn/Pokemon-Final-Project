@@ -1,0 +1,144 @@
+package dev.mtwynn.pokemon.entities.creatures.pokemon;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+
+public class Squirtle extends Pokemon {
+
+	private String type;
+    private int attackratio;
+    private String effectiveness;
+    private String move;
+    private Color colorType;
+	public Image squirtle = ImageLoader.loadImage("/textures/squirtle.png");
+	public Squirtle(Handler handler, float x, float y, int width, int height) {
+		super(handler, x, y, width, height);
+		name = "Squirtle";
+		type = "Water";
+		attack1 = "WATER GUN";
+		attack2 = "TAIL WHIP";
+	    attack3 = "TACKLE";
+	    attack4 = "BUBBLE";
+	    colorType = Color.BLUE;
+	}
+	
+	public void die() {
+		
+	}
+
+    public void attack1(Pokemon enemy) {
+    	move  = attack1;
+    	Sound.waterGun.play();
+    	if(enemy.getType().equals("Fire")) {
+    		effectiveness = "super effective!";
+    		attackratio = 20;
+    		enemy.hurt(attackratio);
+    	}
+    	else {
+    		effectiveness = "okay.";
+    		attackratio = 5;
+    	    enemy.hurt(attackratio);
+    	}
+	}
+	
+	public void attack2(Pokemon enemy) {
+		move  = attack2;
+		effectiveness = "okay.";
+		Sound.tackle.play();
+		attackratio = 12;
+		enemy.hurt(attackratio);
+	}
+	
+	public void attack3(Pokemon enemy) {
+		move  = attack3;
+		effectiveness = "okay.";
+		Sound.tackle.play();
+		attackratio = 10;
+		enemy.hurt(attackratio);
+	}
+	
+	public void attack4(Pokemon enemy) {
+		move  = attack4;
+		Sound.bubble.play();
+		if(enemy.getType().equals("Fire")) {
+    		effectiveness = "super effective!";
+    		attackratio = 25;
+    		enemy.hurt(attackratio);
+    	}
+    	else {
+    		effectiveness = "okay.";
+    		attackratio = 10;
+    	    enemy.hurt(attackratio);
+    	}
+	}
+
+	public void swap(Pokemon other) {
+		
+	}
+
+	public void forfeit() {
+		
+	}
+
+	public void tick() {
+			
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(squirtle, (int) x, (int) y, null);
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public int getAttackRatio() {
+		return attackratio;
+	}
+
+	@Override
+	public String getEffectiveness() {
+		return effectiveness;
+	}
+
+	@Override
+	public String getMove() {
+		return move;
+	}
+
+	@Override
+	public Color getColor() {
+		return colorType;
+	}
+
+	@Override
+	public BufferedImage[] getAtt1() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BufferedImage[] getAtt2() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BufferedImage[] getAtt3() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BufferedImage[] getAtt4() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

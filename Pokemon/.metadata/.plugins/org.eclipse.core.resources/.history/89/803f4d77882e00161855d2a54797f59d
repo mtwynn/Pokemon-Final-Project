@@ -1,0 +1,34 @@
+package dev.mtwynn.pokemon.states;
+
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+import dev.mtwynn.pokemon.worlds.World;
+
+public class GameState3 extends State {
+	
+	public Image secret = ImageLoader.loadImage("/maps/Tim.png");
+	public GameState3(final Handler handler) {
+		super(handler);
+	    Sound.Tommy.play();
+	}
+			
+	public void tick() {
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed()) { 
+			GameState gameState = new GameState(handler);
+		    State.setState(gameState);
+	    }
+	}
+
+	public void render(Graphics g) {
+		secret.render(g);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18)); 
+		g.drawString("World 2", 1050, 25);
+		g.drawString("Left Click and Right Click to go back", 400, 800);
+	}
+
+}

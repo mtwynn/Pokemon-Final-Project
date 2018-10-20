@@ -1,0 +1,52 @@
+package dev.mtwynn.pokemon.tiles;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+ 
+//Coded with help by CodeNMore'
+//Creates a tile based on the tile ID given to it in this class, as well as
+//graphics imported from the Assets class and 
+public class Tile {
+	//Tile ID's
+	public static Tile[] tiles = new Tile[256];
+	public static Tile treeTile = new TreeTile(0);
+	public static Tile grassTile = new GrassTile(1);
+	public static Tile hillTile = new HillTile(2);
+	public static Tile stairTile = new StairTile(3);
+	public static Tile groundTile = new GroundTile(4);
+	public static Tile pavementTile = new PavementTile(5);
+	public static Tile bushTile = new BushTile(6);
+	public static Tile snowTile = new SnowTile(7);
+	public static Tile iceTIle = new IceTile(8);
+	public static Tile sTreeTile = new STreeTile(9);
+	public static Tile sHillTile = new SHillTile(10);
+	
+	protected BufferedImage texture;
+	protected final int id;
+	
+	public static final int TILEWIDTH = 32, TILEHEIGHT = 32;
+	
+	public Tile (BufferedImage texture, int id) {
+		this.texture = texture;
+		this.id = id;
+		
+		tiles[id] = this;
+	}
+	
+	public void tick() {
+		
+	}
+	
+	public void render(Graphics g, int x, int y) {
+		g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
+	}
+	
+	//determines whether a tile is walkable or not
+	public boolean isSolid() { 
+		return false;
+	}
+	public int getId() {
+		return id;
+	}
+
+}

@@ -1,0 +1,194 @@
+package dev.mtwynn.pokemon.gfx;
+
+import java.awt.image.BufferedImage;
+
+//Coded with help by CodeNMore
+//loads in all textures and tiles from the /res package
+public class Assets {
+	
+	private static final int width = 32, height = 32;
+	
+	public static BufferedImage tree, sTree, grass, hill, sHill, stair, ground, pavement, snow, ice, bush, player;//still images
+	public static BufferedImage[] player_down, player_left, player_right, player_up;//player animations
+	public static BufferedImage[] opp_down, opp_left, opp_right, opp_up;//opponent animations
+	public static BufferedImage[] opp2_down, opp2_left, opp2_right, opp2_up;//opponent2 animations
+	public static BufferedImage[] opp3_down, opp3_left, opp3_right, opp3_up;//opponent3 animations
+	public static BufferedImage[] btn_start, btn_HTP, btn_back;//menu buttons
+	public static BufferedImage[] btn_yes, btn_no;
+	public static BufferedImage[] btn_attack, btn_swap, btn_ff;
+	public static BufferedImage[] btn_vw, btn_ls, btn_gr, btn_tc;
+	
+	//loads and initializes an image from file into a SpriteSheet object.
+	//Initializes BufferedImage variables by selecting particular regions
+	//of the image to crop to create tiles and individual characters
+	public static void init() {
+		SpriteSheet character = new SpriteSheet(ImageLoader.loadImage("/sprites/Char1.png"));
+		SpriteSheet opponent = new SpriteSheet(ImageLoader.loadImage("/sprites/Char2.png"));
+		SpriteSheet opponent2 = new SpriteSheet(ImageLoader.loadImage("/sprites/Char3.png"));
+		SpriteSheet opponent3 = new SpriteSheet(ImageLoader.loadImage("/sprites/Char4.png"));
+		SpriteSheet tiles = new SpriteSheet(ImageLoader.loadImage("/textures/Tileset2.png"));
+		SpriteSheet startButton = new SpriteSheet(ImageLoader.loadImage("/textures/StartButton.png"));
+		SpriteSheet htpButton = new SpriteSheet(ImageLoader.loadImage("/textures/HTPButton.png"));
+		SpriteSheet backButton = new SpriteSheet(ImageLoader.loadImage("/textures/BackButton.png"));
+		SpriteSheet YNButton = new SpriteSheet(ImageLoader.loadImage("/textures/YesNo.png"));
+		SpriteSheet AttButton = new SpriteSheet(ImageLoader.loadImage("/textures/AttButton.png"));
+		SpriteSheet SwapButton = new SpriteSheet(ImageLoader.loadImage("/textures/SwapButton.png"));
+		SpriteSheet FFButton = new SpriteSheet(ImageLoader.loadImage("/textures/FF.png"));
+
+		//Menu Buttons
+		btn_start = new BufferedImage[2];
+		btn_start[0] = startButton.crop(0, 24, 187, 59);
+		btn_start[1] = startButton.crop(0, 132, 187, 59);
+		
+		btn_HTP = new BufferedImage[2];
+		btn_HTP[0] = htpButton.crop(0, 0, 282, 97);
+		btn_HTP[1] = htpButton.crop(0, 97, 282, 97);
+		
+		btn_back = new BufferedImage[2];
+		btn_back[0] = backButton.crop(0, 0, 200, 151);
+		btn_back[1] = backButton.crop(0, 157, 200, 151);
+		
+		//Game buttons
+		btn_yes = new BufferedImage[2];
+		btn_yes[0] = YNButton.crop(5, 7, 125, 50);
+		btn_yes[1] = YNButton.crop(5, 72, 125, 50);
+		
+		btn_no = new BufferedImage[2];
+		btn_no[0] = YNButton.crop(132, 7, 125, 50);
+		btn_no[1] = YNButton.crop(131, 72, 125, 50);
+		
+		btn_attack = new BufferedImage[2];
+		btn_attack[0] = AttButton.crop(0, 0, 199, 119);
+		btn_attack[1] = AttButton.crop(0, 119, 199, 119);
+		
+		btn_swap = new BufferedImage[2];
+		btn_swap[0] = SwapButton.crop(0, 0, 199, 246);
+		btn_swap[1] = SwapButton.crop(0, 248, 199, 246);
+		
+		btn_ff = new BufferedImage[2];
+		btn_ff[0] = FFButton.crop(0, 0, 96, 94);
+		btn_ff[1] = FFButton.crop(0, 94, 96, 94);
+		
+		//Attacks
+		btn_vw = new BufferedImage[2];
+		
+		//Player frames
+		player_down = new BufferedImage[4];
+		player_left = new BufferedImage[4];
+		player_right = new BufferedImage[4];
+		player_up = new BufferedImage[4];
+		
+		player_down[0] = character.crop(0, 0, width, height);
+		player_down[1] = character.crop(width, 0, width, height);
+		player_down[2] = character.crop(width * 2, 0, width, height);
+		player_down[3] = character.crop(width * 3, 0, width, height);
+		
+		player_left[0] = character.crop(0, height, width, height);
+		player_left[1] = character.crop(width, height, width, height);
+		player_left[2] = character.crop(width * 2, height, width, height);
+		player_left[3] = character.crop(width * 3, height, width, height);
+		
+		player_right[0] = character.crop(0, height * 2, width, height);
+		player_right[1] = character.crop(width, height * 2, width, height);
+		player_right[2] = character.crop(width * 2, height * 2, width, height);
+		player_right[3] = character.crop(width * 3, height * 2, width, height);
+		
+		player_up[0] = character.crop(0, height * 3, width, height);
+		player_up[1] = character.crop(width, height * 3, width, height);
+		player_up[2] = character.crop(width * 2, height * 3, width, height);
+		player_up[3] = character.crop(width * 3, height * 3, width, height);
+		
+		//Opponent frames
+		opp_down = new BufferedImage[4];
+		opp_left = new BufferedImage[4];
+		opp_right = new BufferedImage[4];
+		opp_up = new BufferedImage[4];
+		
+		opp_down[0] = opponent.crop(0, 0, width, height);
+		opp_down[1] = opponent.crop(width, 0, width, height);
+		opp_down[2] = opponent.crop(width * 2, 0, width, height);
+		opp_down[3] = opponent.crop(width * 3, 0, width, height);
+		
+		opp_left[0] = opponent.crop(0, height, width, height);
+		opp_left[1] = opponent.crop(width, height, width, height);
+		opp_left[2] = opponent.crop(width * 2, height, width, height);
+		opp_left[3] = opponent.crop(width * 3, height, width, height);
+		
+		opp_right[0] = opponent.crop(0, height * 2, width, height);
+		opp_right[1] = opponent.crop(width, height * 2, width, height);
+		opp_right[2] = opponent.crop(width * 2, height * 2, width, height);
+		opp_right[3] = opponent.crop(width * 3, height * 2, width, height);
+		
+		opp_up[0] = opponent.crop(0, height * 3, width, height);
+		opp_up[1] = opponent.crop(width, height * 3, width, height);
+		opp_up[2] = opponent.crop(width * 2, height * 3, width, height);
+		opp_up[3] = opponent.crop(width * 3, height * 3, width, height);
+		
+		//Opponent2 frames
+		opp2_down = new BufferedImage[4];
+		opp2_left = new BufferedImage[4];
+		opp2_right = new BufferedImage[4];
+		opp2_up = new BufferedImage[4];
+		
+		opp2_down[0] = opponent2.crop(0, 0, width, height);
+		opp2_down[1] = opponent2.crop(width, 0, width, height);
+		opp2_down[2] = opponent2.crop(width * 2, 0, width, height);
+		opp2_down[3] = opponent2.crop(width * 3, 0, width, height);
+		
+		opp2_left[0] = opponent2.crop(0, height, width, height);
+		opp2_left[1] = opponent2.crop(width, height, width, height);
+		opp2_left[2] = opponent2.crop(width * 2, height, width, height);
+		opp2_left[3] = opponent2.crop(width * 3, height, width, height);
+		
+		opp2_right[0] = opponent2.crop(0, height * 2, width, height);
+		opp2_right[1] = opponent2.crop(width, height * 2, width, height);
+		opp2_right[2] = opponent2.crop(width * 2, height * 2, width, height);
+		opp2_right[3] = opponent2.crop(width * 3, height * 2, width, height);
+		
+		opp2_up[0] = opponent2.crop(0, height * 3, width, height);
+		opp2_up[1] = opponent2.crop(width, height * 3, width, height);
+		opp2_up[2] = opponent2.crop(width * 2, height * 3, width, height);
+		opp2_up[3] = opponent2.crop(width * 3, height * 3, width, height);
+		
+		//Opponent3 frames
+		opp3_down = new BufferedImage[4];
+		opp3_left = new BufferedImage[4];
+		opp3_right = new BufferedImage[4];
+		opp3_up = new BufferedImage[4];
+		
+		opp3_down[0] = opponent3.crop(0, 0, width, height);
+		opp3_down[1] = opponent3.crop(width, 0, width, height);
+		opp3_down[2] = opponent3.crop(width * 2, 0, width, height);
+		opp3_down[3] = opponent3.crop(width * 3, 0, width, height);
+		
+		opp3_left[0] = opponent3.crop(0, height, width, height);
+		opp3_left[1] = opponent3.crop(width, height, width, height);
+		opp3_left[2] = opponent3.crop(width * 2, height, width, height);
+		opp3_left[3] = opponent3.crop(width * 3, height, width, height);
+		
+		opp3_right[0] = opponent3.crop(0, height * 2, width, height);
+		opp3_right[1] = opponent3.crop(width, height * 2, width, height);
+		opp3_right[2] = opponent3.crop(width * 2, height * 2, width, height);
+		opp3_right[3] = opponent3.crop(width * 3, height * 2, width, height);
+		
+		opp3_up[0] = opponent3.crop(0, height * 3, width, height);
+		opp3_up[1] = opponent3.crop(width, height * 3, width, height);
+		opp3_up[2] = opponent3.crop(width * 2, height * 3, width, height);
+		opp3_up[3] = opponent3.crop(width * 3, height * 3, width, height);
+		
+		
+		//Sprites
+		player = character.crop(0, 0, width, height);
+		tree = tiles.crop(31, 144, 32, 47);
+		sTree = tiles.crop(352, 144, 32, 47);
+		grass = tiles.crop(48, 16, 15, 15);
+		hill = tiles.crop(96, 96, 47, 47);
+		sHill = tiles.crop(240, 80, 47, 47);
+		stair = tiles.crop(48, 128, 47, 15);
+		ground = tiles.crop(400, 0, 31, 31);
+		pavement = tiles.crop(304, 0, 31, 31);
+		snow = tiles.crop(160, 0, 31, 31);
+		ice = tiles.crop(288, 144, 31, 31);
+		bush = tiles.crop(64, 32, 15, 15);
+	}
+}

@@ -1,0 +1,51 @@
+package dev.mtwynn.pokemon;
+
+import dev.mtwynn.pokemon.gfx.Camera;
+import dev.mtwynn.pokemon.input.KeyManager;
+import dev.mtwynn.pokemon.input.MouseManager;
+import dev.mtwynn.pokemon.worlds.World;
+
+//Coded with help by CodeNMore
+//facilitates the storage of variables for quick and efficient access
+//to reduce CPU load when running the game. Acts as a "toolbox" 
+
+public class Handler {
+
+	private Game game;
+	private World world;
+	
+	public int getWidth() {
+		return game.getWidth();
+	}
+	
+	public int getHeight() {
+		return game.getHeight();
+	}
+	
+	public KeyManager getKeyManager() {
+		return game.getKeyManager();
+	}
+	
+	public MouseManager getMouseManager() { 
+		return game.getMouseManager();
+	}
+	
+	public Camera getCamera() {
+		return game.getCamera();
+	}
+	public Handler(Game game) {
+		this.game = game;
+	}
+	public Game getGame() {
+		return game;
+	}
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	public World getWorld() {
+		return world;
+	}
+	public void setWorld(World world) {
+		this.world = world;
+	}
+}

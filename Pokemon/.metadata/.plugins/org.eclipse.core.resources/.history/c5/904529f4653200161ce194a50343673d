@@ -1,0 +1,66 @@
+package dev.mtwynn.pokemon.entities.creatures.pokemon;
+
+import java.awt.Graphics;
+import java.awt.Image;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.entities.creatures.Creature;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+
+public class Charmander extends Pokemon {
+	
+	private Creature owner;
+	public String type;
+	public Image charmander = ImageLoader.loadImage("/textures/Charmander.png");
+	public Charmander(Handler handler, float x, float y, int width, int height, Creature owner) {
+		super(handler, x, y, width, height);
+		this.owner = owner;
+		name = "Charmander";
+		type = "Fire";
+		this.owner = owner;
+	}
+	
+	public void die() {
+		
+	}
+
+    public void attack1(Pokemon enemy) {
+    	/*if(enemy.type.equals("Grass"))
+    		enemy.hurt(10 * 2);
+    	else*/
+    	    enemy.hurt(10);
+	}
+	
+	public void attack2(Pokemon enemy) {
+		
+	}
+	
+	public void attack3(Pokemon enemy) {
+		
+	}
+	
+	public void attack4(Pokemon enemy) {
+		
+	}
+	public void inventory() {
+		
+	}
+
+	public void swap(Pokemon other) {
+		
+	}
+
+	public void forfeit() {
+		
+	}
+
+	public void tick() {
+			
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(charmander, (int) x, (int) y, null);
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;Pokemon&apos;&#x0D;&#x0A;- Original project: &apos;Pokemon&apos;&#x0D;&#x0A;- Original element: &apos;Pokemon/src/dev.MTWynn.Pokemon&apos;" description="Delete element" element1="/src&lt;dev.MTWynn.Pokemon" element2="/src&lt;dev.MTWynn" element3="/src&lt;dev" elements="3" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1462907017968" subPackages="false" version="1.0"/>
+</session>

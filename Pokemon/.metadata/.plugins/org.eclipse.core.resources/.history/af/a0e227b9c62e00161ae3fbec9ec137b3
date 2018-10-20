@@ -1,0 +1,8 @@
+package dev.mtwynn.pokemon.ui;
+
+//Coded with help by CodeNMore
+public interface ClickListener {
+
+	public void onClick();
+	
+}

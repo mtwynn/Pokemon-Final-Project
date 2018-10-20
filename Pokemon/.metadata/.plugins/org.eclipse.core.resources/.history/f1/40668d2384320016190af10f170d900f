@@ -1,0 +1,245 @@
+package dev.mtwynn.pokemon.entities.creatures;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import dev.mtwynn.pokemon.gfx.Animation;
+import dev.mtwynn.pokemon.gfx.Assets;
+import dev.mtwynn.pokemon.states.BattleState;
+import dev.mtwynn.pokemon.states.State;
+import dev.mtwynn.pokemon.ui.ClickListener;
+import dev.mtwynn.pokemon.ui.UIImageButton;
+import dev.mtwynn.pokemon.ui.UIManager;
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.entities.Entity;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Bulbasaur;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Pokemon;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Squirtle;
+
+//Coded with help by CodeNMore
+public class Player extends Creature {
+
+	private Animation animDown, animUp, animLeft, animRight;
+	private UIManager uiManager = new UIManager(handler);
+	private long lastAttackTimer, attackCooldown = 200, attackTimer = attackCooldown;
+	public String dialogue = "";
+	public String dialogue2 = "";
+	private int gold;
+	
+	private ArrayList<Pokemon> team = new ArrayList<Pokemon>();
+	private Pokemon main;
+	private Pokemon second;
+	
+	public Player(Handler handler, float x, float y) {
+		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+		
+		//if needed, bounds.x/y/width/height here to customize bounds of player
+		bounds.x = 8;
+		bounds.y = 8;
+		bounds.width = 15;
+		bounds.height = 21;
+		
+		animDown = new Animation(125, Assets.player_down);
+		animUp = new Animation(125, Assets.player_up);
+		animLeft = new Animation(125, Assets.player_left);
+		animRight = new Animation(125, Assets.player_right);
+		main = (new Bulbasaur(handler, 150, 450, 100, 100, this));
+		team.add(main);
+		second = (new Squirtle(handler, 150, 450, 100, 100, this));
+		team.add(second);
+		
+		
+	}
+
+	//updates player position and animation variables according to keyboard input, 
+	//camera variables, and continually checks to see if this Player is able 
+	//to interact with another entity
+	public void tick() {
+        animDown.tick();
+        animUp.tick();
+        animRight.tick();
+        animLeft.tick();
+		
+		
+		getInput();
+		move();
+		handler.getCamera().center(this);
+		
+		checkInteract();
+	}
+	
+	//gets input from the user, and updates the xMove and yMove variables
+	//accordingly, to move Player. Movement is NOT perfect, and can be 
+	//glitchy around walls
+	private void getInput() {
+		xMove = 0;
+		yMove = 0;
+		
+		if(handler.getKeyManager().W)
+			yMove = -speed;
+		if(handler.getKeyManager().S)
+			yMove = speed;
+		if(handler.getKeyManager().A)
+			xMove = -speed;
+		if(handler.getKeyManager().D)
+			xMove = speed;
+		if(handler.getKeyManager().Shift) {
+			speed = 5.0f;
+		}
+		else
+			speed = 2.5f;
+		}
+
+	public void render(Graphics g) {
+		uiManager.render(g);
+		g.drawImage(getCurrentAnimFrame(), (int) (x - handler.getCamera().getxOffset()), 
+				(int) (y - handler.getCamera().getyOffset()), width, height, null);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Impact", Font.BOLD, 36)); 
+		g.drawString(dialogue, 200, 700);
+		g.drawString("Gold: " + gold, 50, 50);
+	}
+	
+	//gets the proper image of player specified in the Assets class based
+	//on which directional key the user is pressing. Changes the image
+	//of the player accordingly to create the illusion of the player
+	//being animated.
+	private BufferedImage getCurrentAnimFrame() {
+		if(xMove > 0) {
+			return animRight.getCurrentFrame();
+		}
+		else if(xMove < 0) {
+			return animLeft.getCurrentFrame();
+		}
+		else if(yMove > 0) {
+			return animDown.getCurrentFrame();
+		}
+		else if(yMove < 0) {
+			return animUp.getCurrentFrame();
+		}
+		else
+			return Assets.player;
+	}
+	
+	//creates a temporary rectangle that forms to the left, right, top, or bottom of the Player
+	//depending on which direction the user specifies and checks to see if this rectangle intersects 
+	//the collision bounds of another entity. If this "attack rectangle" does intersect, it will 
+	//interact with the entity in various ways.
+	public Creature checkInteract() { 
+		attackTimer += System.currentTimeMillis() - lastAttackTimer;
+		lastAttackTimer = System.currentTimeMillis();
+		if(attackTimer < attackCooldown)
+			return null;; 
+		
+		Rectangle collBounds = getCollisionBounds(0, 0); //creates a rectangle defined by collision bound size
+		Rectangle attackRect = new Rectangle(); // creates new rectangle for interaction 
+		int attackRectSize = 20;
+		attackRect.width = attackRectSize;
+		attackRect.height = attackRectSize;
+		
+		//directional attacks
+		if(handler.getKeyManager().aUp) {
+			attackRect.x = collBounds.x + collBounds.width / 2 - attackRectSize / 2;
+			attackRect.y = collBounds.y - attackRectSize;
+		}
+		else if(handler.getKeyManager().aDown) {
+			attackRect.x = collBounds.x + collBounds.width / 2 - attackRectSize / 2;
+			attackRect.y = collBounds.y + collBounds.height;
+		}
+		else if(handler.getKeyManager().aLeft) {
+			attackRect.x = collBounds.x -attackRectSize;
+			attackRect.y = collBounds.y + collBounds.height / 2 - attackRectSize / 2;
+		}
+		else if(handler.getKeyManager().aRight) {
+			attackRect.x = collBounds.x + collBounds.width;
+			attackRect.y = collBounds.y +collBounds.height / 2 - attackRectSize / 2;
+		}
+		else 
+			return null;
+		
+		attackTimer = 0;
+		
+		//for each entity, check first to see if the entity is this class. If it is, continue, because we do not
+		//want to attack or interact with ourselves. If the entity is another, then invoke its interact method (talk(), hurt(), etc). 
+		for(final Entity e : handler.getWorld().getEntityManager().getEntities()) {
+			if(e.equals(this))
+				continue;
+			if(e.getCollisionBounds(0, 0).intersects(attackRect))
+			{
+				System.out.println("Hi! My name is " + e.name + "! Would you like to battle?");
+				dialogue = "Hi! My name is " + e.name + "! Would you like to battle?";
+				e.talk.play();
+		     	handler.getMouseManager().setUIManager(uiManager);
+				uiManager.addObject(new UIImageButton(450, 750, 125, 50, Assets.btn_yes, new ClickListener(){
+					Handler handle = handler;
+					public void onClick() {					
+						BattleState battle = new BattleState(handle, handle.getWorld().getEntityManager().getPlayer(), (Creature) e);
+						State.setState(battle);
+						Sound.Background.stop();
+						Sound.HappyVille.stop();
+						Sound.Battle.play();
+					}
+				}));
+				
+				uiManager.addObject(new UIImageButton(600, 750, 125, 50, Assets.btn_no, new ClickListener(){
+					public void onClick() {					
+							uiManager.clearList();
+							dialogue = "";
+					}
+				}));
+				
+				return null;
+			}
+		}
+		return null;
+	}
+	
+	public void die() {
+		System.out.println("You lose");
+	}
+	
+	public float getX()
+	{
+		return x;
+	}
+	
+	public float getY()
+	{
+		return y;
+	}
+	 
+	public Pokemon getMain() {
+		return main;
+	}
+	
+	
+	public Pokemon getSecond() { 
+		return second;
+	}
+	
+	public void setMain(Pokemon swap) {
+		main = swap;
+	}
+	
+	public void setSecond(Pokemon swap) { 
+		second = swap;
+	}
+	
+	public ArrayList<Pokemon> getTeam() {
+		return team;
+	}
+	
+	public int getGold() { 
+		return gold;
+	}
+	
+	public void setGold(int amt) {
+		gold += amt;
+	}
+	
+}

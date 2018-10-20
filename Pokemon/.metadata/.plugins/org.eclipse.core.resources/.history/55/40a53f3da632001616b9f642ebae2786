@@ -1,0 +1,231 @@
+package dev.mtwynn.pokemon.states;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.ArrayList;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.entities.creatures.Creature;
+import dev.mtwynn.pokemon.entities.creatures.Player;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Bulbasaur;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Charmander;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Pikachu;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Pokemon;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Squirtle;
+import dev.mtwynn.pokemon.gfx.Assets;
+import dev.mtwynn.pokemon.gfx.Gold;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+import dev.mtwynn.pokemon.ui.ClickListener;
+import dev.mtwynn.pokemon.ui.UIImageButton;
+import dev.mtwynn.pokemon.ui.UIManager;
+
+public class BattleState extends State {
+
+	public Image battle = ImageLoader.loadImage("/textures/Battle.png");
+	private UIManager uiManager;
+	private Player play; 
+	private Creature opp;
+	
+	public BattleState (final Handler handler, final Player player, final Creature opponent) {
+		super(handler);
+		play = player;
+		opp = opponent;
+		uiManager = new UIManager(handler);
+     	handler.getMouseManager().setUIManager(uiManager);
+     	
+     	//Attack
+     	uiManager.addObject(new UIImageButton(125, 700, 199, 119, Assets.btn_attack, new ClickListener(){
+			public void onClick() {
+				uiManager.clearList();
+				uiManager.addObject(new UIImageButton(100, 700, 100, 100, play.getMain().getAtt1(), new ClickListener(){
+					public void onClick() {
+						uiManager.clearList();
+						play.getMain().attack1(opp.getMain());
+						opp.hurt(play.getMain().getAttackRatio());
+						opp.getMain().attack1(play.getMain());
+						play.hurt(opp.getMain().getAttackRatio());
+						if(play.getMain().getHealth() > 0 && opp.getMain().getHealth() > 0) {
+							BattleState turn = new BattleState(handler, play, opp);
+							State.setState(turn);
+						}
+						else {
+							
+							if(play.getMain().getHealth() > opponent.getMain().getHealth()) {
+								Gold.setGold(40);
+								Sound.victory.play();
+							}
+							else {
+								Gold.setGold(-70);
+								Sound.defeat.play();
+							}
+							GameState1 back = new GameState1(handler, 97, 15);
+							State.setState(back);
+							Sound.Battle.stop();
+							Sound.Background.play();
+						}	
+					}
+			}));
+				uiManager.addObject(new UIImageButton(350, 700, 100, 100, play.getMain().getAtt2(), new ClickListener(){
+					public void onClick() {
+						uiManager.clearList();
+						play.getMain().attack2(opp.getMain());
+						opp.hurt(play.getMain().getAttackRatio());
+						opp.getMain().attack1(play.getMain());
+						play.hurt(opp.getMain().getAttackRatio());
+						if(play.getMain().getHealth() > 0 && opp.getMain().getHealth() > 0) {
+							BattleState turn = new BattleState(handler, play, opp);
+							State.setState(turn);
+						}
+						else {
+							
+							if(play.getMain().getHealth() > opponent.getMain().getHealth()) {
+								Gold.setGold(40);
+								Sound.victory.play();
+							}
+							else {
+								Gold.setGold(-70);
+								Sound.defeat.play();
+							}
+							GameState1 back = new GameState1(handler, 97, 15);
+							State.setState(back);
+							Sound.Battle.stop();
+							Sound.Background.play();
+						}	
+					}
+			}));
+				uiManager.addObject(new UIImageButton(650, 700, 100, 100, play.getMain().getAtt3(), new ClickListener(){
+					public void onClick() {
+						uiManager.clearList();
+						play.getMain().attack3(opp.getMain());
+						opp.hurt(play.getMain().getAttackRatio());
+						opp.getMain().attack1(play.getMain());
+						play.hurt(opp.getMain().getAttackRatio());
+						if(play.getMain().getHealth() > 0 && opp.getMain().getHealth() > 0) {
+							BattleState turn = new BattleState(handler, play, opp);
+							State.setState(turn);
+						}
+						else {
+							
+							if(play.getMain().getHealth() > opponent.getMain().getHealth()) {
+								Gold.setGold(40);
+								Sound.victory.play();
+							}
+							else {
+								Gold.setGold(-70);
+								Sound.defeat.play();
+							}
+							GameState1 back = new GameState1(handler, 97, 15);
+							State.setState(back);
+							Sound.Battle.stop();
+							Sound.Background.play();
+						}	
+					}
+			}));
+				uiManager.addObject(new UIImageButton(950, 700, 100, 100, play.getMain().getAtt4(), new ClickListener(){
+					public void onClick() {
+						uiManager.clearList();
+						play.getMain().attack4(opp.getMain());
+						opp.hurt(play.getMain().getAttackRatio());
+						opp.getMain().attack1(play.getMain());
+						play.hurt(opp.getMain().getAttackRatio());
+						if(play.getMain().getHealth() > 0 && opp.getMain().getHealth() > 0) {
+							BattleState turn = new BattleState(handler, play, opp);
+							State.setState(turn);
+						}
+						else {
+							
+							if(play.getMain().getHealth() > opponent.getMain().getHealth()) {
+								Gold.setGold(40);
+								Sound.victory.play();
+							}
+							else {
+								Gold.setGold(-70);
+								Sound.defeat.play();
+							}
+							GameState1 back = new GameState1(handler, 97, 15);
+							State.setState(back);
+							Sound.Battle.stop();
+							Sound.Background.play();
+						}	
+					}
+			}));
+				
+		}
+	}));
+     	
+     	//Swap
+     	uiManager.addObject(new UIImageButton(475, 600, 199, 246, Assets.btn_swap, new ClickListener(){
+			public void onClick() {
+				uiManager.clearList();
+				uiManager.addObject(new UIImageButton(0, 700, 199, 119, Assets.btn_swap, new ClickListener(){
+					public void onClick() {
+						uiManager.clearList();
+						BattleState turn = new BattleState(handler, player, opponent);
+						State.setState(turn);
+						play.setMain(play.getSecond());
+						play.setSecond(play.getMain());
+					}
+			}));
+				uiManager.addObject(new UIImageButton(200, 700, 199, 119, Assets.btn_swap, new ClickListener(){
+					public void onClick() {
+						uiManager.clearList();
+						BattleState turn = new BattleState(handler, player, opponent);
+						State.setState(turn);
+					}
+			}));
+				uiManager.addObject(new UIImageButton(400, 700, 199, 119, Assets.btn_swap, new ClickListener(){
+					public void onClick() {
+						uiManager.clearList();
+						BattleState turn = new BattleState(handler, player, opponent);
+						State.setState(turn);
+					}
+			}));
+		}
+	}));
+    	//Forfeit
+     	uiManager.addObject(new UIImageButton(800, 725, 96, 94, Assets.btn_ff, new ClickListener(){
+			public void onClick() {
+				GameState1 back = new GameState1(handler, 97, 15);
+				State.setState(back);
+				Sound.Battle.stop();
+				Sound.Background.play();
+			}
+		}));
+     }
+	
+	public void tick() {
+		
+		
+	/*	if(main.getHealth() <= 0) { 
+			player.dialogue
+		}*/
+		
+		/*if(opponent.main.getHealth() <= 0) {
+		}*/
+		
+		//If opponent is out of Pokemon, win game and exit battle state
+		/*if(opponent.team.size() <= 0) {
+			GameState1 back = new GameState1(handler, (int) lastX, (int) lastY);
+			State.setState(back);
+			Sound.Battle.stop();
+			Sound.Background.play();
+		}*/
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(battle, -150, 0, null);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 48)); 
+		g.setColor(Color.RED);
+		g.drawString(play.getMain().name + " HP: " + play.getMain().getHealth(), 25, 100);
+		g.drawString(opp.getMain().name + " HP: " + opp.getMain().getHealth(), 660, 100);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+		g.setColor(play.getMain().getColor());
+		g.drawString(play.getMain().name + " used " + play.getMain().getMove() + ". It was " + play.getMain().getEffectiveness() , 25, 130);
+		uiManager.render(g);
+		play.getMain().render(g);
+		opp.getMain().render(g);
+	}
+}

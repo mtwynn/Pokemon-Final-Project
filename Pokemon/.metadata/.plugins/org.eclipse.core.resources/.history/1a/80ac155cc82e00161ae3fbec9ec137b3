@@ -1,0 +1,40 @@
+package dev.mtwynn.pokemon.states;
+
+import java.awt.Font;
+import java.awt.Graphics;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.worlds.World;
+
+public class GameState3 extends State {
+
+	private World world3;
+	public GameState3(final Handler handler, int spawnX, int spawnY) {
+		super(handler);
+		Sound.HappyVille.play();
+		world3 = new World(handler, "res/Worlds/world3.txt",spawnX, spawnY);
+		handler.setWorld(world3);
+	    handler.getCamera().center(handler.getWorld().getEntityManager().getPlayer());
+
+	}
+			
+	public void tick() {
+		world3.tick();
+		if(handler.getWorld().getEntityManager().getPlayer().getY() < -65 &&
+				handler.getWorld().getEntityManager().getPlayer().getX() < 100 &&
+				handler.getWorld().getEntityManager().getPlayer().getX() > 90) { 
+			GameState2 gameState2 = new GameState2(handler, 97, 1395);
+		    State.setState(gameState2);
+		    Sound.HappyVille.stop();
+		    Sound.Background.play();
+	    }
+	}
+
+	public void render(Graphics g) {
+		world3.render(g);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18)); 
+		g.drawString("Snow Field", 1020, 25);
+	}
+
+}

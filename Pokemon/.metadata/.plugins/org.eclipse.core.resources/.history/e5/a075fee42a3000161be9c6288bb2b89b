@@ -1,0 +1,44 @@
+package dev.mtwynn.pokemon.entities.creatures.pokemon;
+
+import java.awt.Graphics;
+
+import dev.mtwynn.pokemon.Handler;
+
+public class Charmander extends Pokemon {
+
+//	private ArrayList<Moves> moves = new ArrayList<Moves>();
+	
+	public Charmander(Handler handler, float x, float y, int width, int height) {
+		super(handler, x, y, width, height);
+		
+	}
+	
+	public void die() {
+		
+	}
+
+	public void attack() {
+		
+	}
+
+	public void inventory() {
+		
+	}
+
+	public void swap(Pokemon other) {
+		
+	}
+
+	public void forfeit() {
+		
+	}
+
+	public void tick() {
+			
+	}
+
+	public void render(Graphics g) {
+			
+	}
+
+}

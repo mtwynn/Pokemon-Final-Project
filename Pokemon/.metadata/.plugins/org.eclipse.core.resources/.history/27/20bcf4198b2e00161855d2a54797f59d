@@ -1,0 +1,5 @@
+package dev.mtwynn.pokemon.tiles;
+
+public class IceTile {
+
+}

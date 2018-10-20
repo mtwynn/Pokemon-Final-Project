@@ -1,0 +1,82 @@
+package dev.mtwynn.pokemon.entities.creatures;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Pokemon;
+import dev.mtwynn.pokemon.gfx.Animation;
+import dev.mtwynn.pokemon.gfx.Assets;
+
+public class Opponent3 extends Creature {
+
+private Animation animDown, animUp, animLeft, animRight;
+	
+	private ArrayList<Pokemon> team = new ArrayList<Pokemon>();
+	
+	public Opponent3(Handler handler, float x, float y) {
+		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+		
+		//if needed, bounds.x/y/width/height here to customize bounds of player
+		bounds.x = 8;
+		bounds.y = 8;
+		bounds.width = 15;
+		bounds.height = 21;
+		
+		animUp = new Animation(125, Assets.opp3_up);
+		animDown = new Animation(125, Assets.opp3_down);
+	}
+
+	//updates player variables according to keyboard input as well as camera variables
+	public void tick() {
+        animUp.tick();
+        animDown.tick();
+		
+		
+		getLoc();
+		move();
+		checkInteract();
+	}
+	
+	private void getLoc() {
+		if(y == 975) {
+			speedy *= -1;
+			yMove = -2f;
+		}
+		if(y == 750) { 
+			speedy *= -1;
+			yMove = speedy;
+		}
+	}
+	public void render(Graphics g) {
+		g.drawImage(getCurrentAnimFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), null);
+	}
+	
+	private BufferedImage getCurrentAnimFrame() {
+		if(yMove > 0)
+			return animDown.getCurrentFrame();
+		else if(yMove < 0)
+			return animUp.getCurrentFrame();
+		else
+			return Assets.player;
+	}
+	
+	private void checkInteract() { 
+		
+	}
+	
+	public void die() {
+	}
+	
+	public float getX()
+	{
+		return x;
+	}
+	
+	public float getY()
+	{
+		return y;
+	}
+
+}

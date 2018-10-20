@@ -1,0 +1,24 @@
+package dev.mtwynn.pokemon.Sound;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
+
+public class Sound {//holds all AudioClip objects and their respective .wav files (sound dictionary, basically)
+	
+	//BGM
+    public static final AudioClip Background = Applet.newAudioClip(Sound.class.getResource("/audio/Maple.wav"));
+    public static final AudioClip start = Applet.newAudioClip(Sound.class.getResource("/audio/Start Menu.wav"));
+    public static final AudioClip Tommy = Applet.newAudioClip(Sound.class.getResource("/audio/SecretLevel.wav"));
+    public static final AudioClip HappyVille = Applet.newAudioClip(Sound.class.getResource("/audio/HappyVille.wav"));
+    public static final AudioClip Battle = Applet.newAudioClip(Sound.class.getResource("/audio/Battle2.wav"));
+    
+    //Monologues
+    public static final AudioClip Sally = Applet.newAudioClip(Sound.class.getResource("/audio/Sally.wav"));
+    public static final AudioClip Jimbob = Applet.newAudioClip(Sound.class.getResource("/audio/Jimbob.wav"));
+    public static final AudioClip DillPickle = Applet.newAudioClip(Sound.class.getResource("/audio/Dill Pickle.wav"));
+    
+    //Sound Effects
+    public static final AudioClip tackle = Applet.newAudioClip(Sound.class.getResource("/audio/attacks/Tackle.wav"));
+    public static final AudioClip victory = Applet.newAudioClip(Sound.class.getResource("/audio/attacks/Tackle.wav"));
+
+}

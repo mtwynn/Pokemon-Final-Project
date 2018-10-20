@@ -1,0 +1,69 @@
+package dev.mtwynn.pokemon.states;
+
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.gfx.Assets;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+import dev.mtwynn.pokemon.ui.ClickListener;
+import dev.mtwynn.pokemon.ui.UIImageButton;
+import dev.mtwynn.pokemon.ui.UIManager;
+
+//Coded with help by CodeNMore
+//Creates the main menu
+public class MenuState extends State {
+
+
+    private UIManager uiManager;
+	public Image startScreen = ImageLoader.loadImage("/textures/decor/StartScreen.png");
+	public Image logo = ImageLoader.loadImage("/textures/decor/Logo.png");
+	
+	public MenuState(final Handler handle) {
+		super(handle);
+		uiManager = new UIManager(handle);
+     	handler.getMouseManager().setUIManager(uiManager);
+
+
+     	//adds an interactive object at the specified location with specified dimensions 
+		uiManager.addObject(new UIImageButton(470, 305, 192, 59, Assets.btn_start, new ClickListener(){
+			Handler handler = handle;
+			//if invoked (button is clicked), set the Mouse Manager equal to null,
+			//initialize a new GameState to run on, and set the current state of the game
+			//to that new GameState
+			public void onClick() {
+				
+				handler.getMouseManager().setUIManager(null);
+				GameState1 gameState = new GameState1(handle, 97, 15);
+				State.setState(gameState);
+				Sound.start.stop();
+				Sound.Background.play();
+			}
+		}));
+	
+		uiManager.addObject(new UIImageButton(430, 760, 282, 97, Assets.btn_HTP, new ClickListener(){
+			
+			Handler handler = handle;
+			
+			public void onClick() {
+				
+				handler.getMouseManager().setUIManager(uiManager);
+				InstructionState instructionState = new InstructionState(handle);
+				State.setState(instructionState);
+			}
+		}));
+	}
+	
+	public void tick() {
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(startScreen, 0, 0, null);
+		g.drawImage(logo, 300, 20, null);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 14)); 
+		g.drawString("Coded by Tam Nguyen, with help from Youtuber, CodeNMore", 750, 850);
+		uiManager.render(g);
+	}
+}

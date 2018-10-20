@@ -1,0 +1,14 @@
+package dev.mtwynn.pokemon.moves;
+
+import dev.mtwynn.pokemon.Game;
+import dev.mtwynn.pokemon.entities.creatures.Opponent;
+import dev.mtwynn.pokemon.entities.creatures.Player;
+import dev.mtwynn.pokemon.entities.creatures.pokemon.Pokemon;
+
+public class Attack extends Move {
+
+	public Attack(Game game, Player player, Pokemon pokemon, Opponent opponent) {
+		super(game, player, pokemon, opponent);
+		
+	}
+}

@@ -1,0 +1,5 @@
+package dev.mtwynn.pokemon.states;
+
+public class GameState2 {
+
+}

@@ -1,0 +1,197 @@
+package dev.mtwynn.pokemon;
+
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.display.Display;
+import dev.mtwynn.pokemon.gfx.Assets;
+import dev.mtwynn.pokemon.gfx.Camera;
+import dev.mtwynn.pokemon.input.KeyManager;
+import dev.mtwynn.pokemon.input.MouseManager;
+import dev.mtwynn.pokemon.states.MenuState;
+import dev.mtwynn.pokemon.states.State;
+
+//Coded with the help of Youtuber, CodeNMore. Source code is available at https://codenmore.neocities.org/source.html. 
+//In addition to receiving help with the game code, I have incorporated my own tiles. 
+//Comments made within the code are to explain what each segment does from my own understanding of the code. 
+
+
+
+//holds all elements of game play, starting, running, and closing
+//Coded with help by CodeNMore
+public class Game implements Runnable { 
+
+	//Display
+	private int width, height;
+	private Display display;
+	public String title;
+	
+	//Threads
+	private boolean running = false;
+	private Thread thread;
+	
+	//Handler
+	private Handler handler; 
+    
+	//Graphics
+	private BufferStrategy bs;
+	private Graphics g;
+	
+	//Input
+	private KeyManager keyManager;
+	private MouseManager mouseManager;
+	
+	//States
+	public State menuState;
+	
+	//Camera
+	private Camera camera;
+	
+	//Game
+	public Game(String title, int width, int height) { 
+		this.width = width;
+		this.height = height;
+		this.title = title;
+		keyManager = new KeyManager();
+		mouseManager = new MouseManager();
+		Sound.start.play();
+	}
+
+	//initializes game elements
+	private void init() {
+		//Initializes graphics and UI objects
+		display = new Display(title, width, height);
+		display.getFrame().addKeyListener(keyManager);
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
+		Assets.init();
+		
+		handler = new Handler(this);
+		
+		camera = new Camera(handler, 0, 0);
+
+		menuState = new MenuState(handler);
+		State.setState(menuState);
+	}
+	
+	//updates the state of the game
+	private void tick() {
+		keyManager.tick();
+
+		if(State.getState() != null) {
+			State.getState().tick();
+		}
+	}
+	
+	//draws game according to the current variables using buffers
+	private void render() {
+	    bs = display.getCanvas().getBufferStrategy();
+	    if(bs == null) {
+	    	display.getCanvas().createBufferStrategy(3);
+	    	return;
+	    }
+	    g = bs.getDrawGraphics();
+	    
+	    //Clear Screen
+	    g.clearRect(0, 0, width,  height);
+	    
+	    //Draw
+
+     	if(State.getState() != null)
+			State.getState().render(g);
+		
+	    //End Draw
+	    bs.show();
+	    g.dispose();
+	}
+	
+	//runs the game 
+	public void run() { 
+		
+	    init();
+	    int fps = 60;
+	    double timePerTick = 1000000000 / fps;
+	    double delta = 0;
+	    long now;
+	    long lastTime = System.nanoTime();
+	    long timer = 0;
+	    int ticks = 0;
+	    
+	    while(running) { //while true, continues updating variables and rendering graphics
+	    	now = System.nanoTime();
+	    	delta += (now - lastTime) / timePerTick;
+	    	timer += now - lastTime;
+	    	lastTime = now;
+	    	
+	    	if(delta >= 1) {
+	    		tick();
+	    		render();
+	    		ticks++;
+	    		delta--;
+	    	}
+	    	if(timer >= 1000000000) { //prints out frames per second if timer is greater than 1 billion nanoseconds
+	    		System.out.println("Ticks and Frames: " + ticks);
+	    		ticks = 0;
+	    		timer = 0;
+	    	}
+	    }
+	    stop();
+	}
+	
+	//starts the game by creating a thread for game to run on
+	public synchronized void start() { 
+		if(running)//fail safe, in case instance of game already running
+		    return;
+		running = true;
+		thread = new Thread(this); //passes game (this class) into a thread 
+		thread.start();
+
+	}
+	
+	//stops the game
+	public synchronized void stop() {
+		if(!running)//fail safe 
+		    return;
+		running = false;
+		try {
+			thread.join(); //safely closes the game
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setDisplay(Display display) {
+		this.display = display;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	public Camera getCamera() {
+		return camera;
+	}
+	
+	public KeyManager getKeyManager() { 
+		return keyManager;
+	}
+	
+	public MouseManager getMouseManager() { 
+		return mouseManager;
+	}
+	
+}

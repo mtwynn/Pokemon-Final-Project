@@ -1,0 +1,13 @@
+package dev.mtwynn.pokemon.Sound;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
+
+public class Sound {//holds all AudioClip objects and their respective .wav files 
+	
+    public static final AudioClip Background = Applet.newAudioClip(Sound.class.getResource("/audio/Maple.wav"));
+    public static final AudioClip start = Applet.newAudioClip(Sound.class.getResource("/audio/Start Menu.wav"));
+    public static final AudioClip Tommy = Applet.newAudioClip(Sound.class.getResource("/audio/SecretLevel.wav"));
+    public static final AudioClip HappyVille = Applet.newAudioClip(Sound.class.getResource("/audio/HappyVille.wav"));
+    public static final AudioClip Battle = Applet.newAudioClip(sound.class.getResource("/audio/Battle.wav"));
+}

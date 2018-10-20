@@ -1,0 +1,30 @@
+package dev.mtwynn.pokemon.entities.creatures.pokemon;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.entities.Entity;
+
+public abstract class Pokemon extends Entity {
+
+	private int health;
+	public Pokemon(Handler handler, float x, float y, int width, int height) {
+		super(handler, x, y, width, height);
+		
+	}
+	
+	//commands Pokemon to perform an attack
+	public abstract void attack();
+	
+	//exchanges current Pokemon with another, passed as argument
+	public abstract void swap(Pokemon other);
+	
+	//ends battle, causing player to lose experience points and money 
+	public abstract void forfeit();
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	public void setHealth() { 
+		
+	}
+}

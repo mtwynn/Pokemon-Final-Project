@@ -1,0 +1,18 @@
+package dev.mtwynn.pokemon.gfx;
+
+public class Gold {
+
+	private static int gold;
+	
+	public Gold() {
+		gold = 0;
+	}
+	
+	public static int getGold() {
+		return gold;
+	}
+	
+	public void setGold(int amt) {
+		gold += amt;
+	}
+}

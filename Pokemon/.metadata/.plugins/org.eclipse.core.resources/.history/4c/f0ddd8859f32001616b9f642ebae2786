@@ -1,0 +1,121 @@
+package dev.mtwynn.pokemon.entities.creatures.pokemon;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+
+public class Bulbasaur extends Pokemon {
+
+    private int attackratio;
+	private String type;
+    private String effectiveness;
+    private String move;
+	public Image bulbasaur = ImageLoader.loadImage("/textures/Bulbasaur.png");
+
+	public Bulbasaur(Handler handler, float x, float y, int width, int height) {
+		super(handler, x, y, width, height);
+		name = "Bulbasaur";
+		type = "Grass";
+		attack1 = "VINE WHIP";
+		attack2 = "LEECH SEED";
+	    attack3 = "TACKLE";
+	}
+	
+	public void attack1(Pokemon enemy) {
+		Sound.vineWhip.play();
+		move = attack1;
+		if(enemy.getType().equals("Water")) {
+			effectiveness = "super effective!";
+			attackratio = 15;
+    		enemy.hurt(attackratio);
+		}
+    	else {
+    		attackratio = 5;
+    	    enemy.hurt(attackratio);
+    	}
+	}
+	public void attack2(Pokemon enemy) {
+		Sound.leechSeed.play();
+		move = attack2;
+		if(enemy.getType().equals("Water")) {
+			effectiveness = "super effective!";
+			attackratio = 30;
+    		enemy.hurt(attackratio);
+		}
+    	else {
+    		attackratio = 3;
+    	    enemy.hurt(attackratio);
+    	}
+	}
+	
+	public void attack3(Pokemon enemy) {
+		move = attack3;
+		effectiveness = "okay.";
+		Sound.tackle.play();
+		attackratio = 10;
+		enemy.hurt(attackratio);
+	}
+	
+	public void attack4(Pokemon enemy) {
+		
+	}
+	
+	public void swap(Pokemon other) {
+		
+	}
+
+	public void forfeit() {
+		
+	}
+
+	public void tick() {
+			
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(bulbasaur, (int) x, (int) y, null);
+
+	}
+	
+	public String getType() {
+		return type;
+	}
+	
+	public int getAttackRatio() {
+		return attackratio;
+	}
+
+	public void die() {
+		
+	}
+
+	public String getAttack1() {
+		return attack1;
+	}
+
+	public String getAttack2() {
+		return attack2;
+	}
+
+	public String getAttack3() {
+		return attack3;
+	}
+	
+	public String getAttack4() {
+		return attack4;
+	}
+	
+	public String getEffectiveness() {
+		return effectiveness;
+	}
+
+	public String getMove() {
+		return move;
+	}
+
+}

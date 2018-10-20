@@ -1,0 +1,55 @@
+package dev.mtwynn.pokemon.entities.creatures.pokemon;
+
+import java.awt.Graphics;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.entities.creatures.Creature;
+
+public class Pikachu extends Pokemon {
+	
+	public Pikachu(Handler handler, float x, float y, int width, int height, Creature owner, int health) {
+		super(handler, x, y, width, height, health);
+		name = "Pikachu";
+	}
+	
+	public void die() {
+		
+	}
+
+    public void attack1(Pokemon enemy) {
+		
+	}
+	
+	public void attack2(Pokemon enemy) {
+		
+	}
+	
+	public void attack3(Pokemon enemy) {
+		
+	}
+	
+	public void attack4(Pokemon enemy) {
+		
+	}
+
+	public void inventory() {
+		
+	}
+
+	public void swap(Pokemon other) {
+		
+	}
+
+	public void forfeit() {
+		
+	}
+
+	public void tick() {
+			
+	}
+
+	public void render(Graphics g) {
+			
+	}
+
+}

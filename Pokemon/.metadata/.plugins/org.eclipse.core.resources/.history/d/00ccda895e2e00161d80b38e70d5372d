@@ -1,0 +1,5 @@
+package dev.mtwynn.pokemon.worlds;
+
+public class World2 extends World {
+
+}

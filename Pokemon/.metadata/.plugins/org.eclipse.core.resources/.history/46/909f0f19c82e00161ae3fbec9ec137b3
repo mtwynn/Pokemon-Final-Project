@@ -1,0 +1,36 @@
+package dev.mtwynn.pokemon.states;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+
+public class GameState0 extends State {
+	
+	public Image secret = ImageLoader.loadImage("/maps/Tim.png");
+	public GameState0(final Handler handler) {
+		super(handler);
+		Sound.Tommy.play();
+	}
+			
+	public void tick() {
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed()) { 
+			GameState gameState = new GameState(handler, 97, 15);
+		    State.setState(gameState);
+		    Sound.Tommy.stop();
+	    }
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(secret, -400, -400, null);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18)); 
+		g.setColor(Color.WHITE);
+		g.drawString("SECRET LEVEL", 1000, 25);
+		g.drawString("Left Click and Right Click to go back", 400, 800);
+	}
+
+}

@@ -1,0 +1,8 @@
+package dev.mtwynn.pokemon.tiles;
+
+public class SnowTile {
+
+	public SnowTile(int id) {
+		super(Assets.snow, id);
+	}
+}

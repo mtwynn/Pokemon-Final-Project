@@ -1,0 +1,38 @@
+package dev.mtwynn.pokemon.states;
+
+import java.awt.Font;
+import java.awt.Graphics;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.Sound.Sound;
+import dev.mtwynn.pokemon.worlds.World;
+
+public class GameState2 extends State {
+
+	private World world2;
+	public GameState2(final Handler handler) {
+		super(handler);
+	    Sound.Background.play();
+		world2 = new World(handler, "res/Worlds/world2.txt");
+		handler.setWorld(world2);
+	    handler.getCamera().center(handler.getWorld().getEntityManager().getPlayer());
+
+	}
+			
+	public void tick() {
+		world2.tick();
+		System.out.println(handler.getWorld().getEntityManager().getPlayer().getX() + "   "
+				+ handler.getWorld().getEntityManager().getPlayer().getY());
+//		if(handler.getWorld().getEntityManager().getPlayer().getY() < -15) { 
+//			GameState gameState = new GameState(handler);
+//			State.setState(gameState);
+//		}
+	}
+
+	public void render(Graphics g) {
+		world2.render(g);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 18)); 
+		g.drawString("World 2", 1050, 25);
+	}
+
+}

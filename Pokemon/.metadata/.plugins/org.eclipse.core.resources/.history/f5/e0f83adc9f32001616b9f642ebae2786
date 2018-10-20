@@ -1,0 +1,112 @@
+package dev.mtwynn.pokemon.entities.creatures.pokemon;
+
+import java.awt.Graphics;
+import java.awt.Image;
+
+import dev.mtwynn.pokemon.Handler;
+import dev.mtwynn.pokemon.gfx.ImageLoader;
+
+public class Squirtle extends Pokemon {
+
+	private String type;
+    private int attackratio;
+    private String effectiveness;
+    private String move;
+	public Image squirtle = ImageLoader.loadImage("/textures/squirtle.png");
+	public Squirtle(Handler handler, float x, float y, int width, int height) {
+		super(handler, x, y, width, height);
+		name = "Squirtle";
+		type = "Water";
+		attack1 = "WATER GUN";
+		attack2 = "TACKLE";
+	    attack3 = "TACKLE";
+	}
+	
+	public void die() {
+		
+	}
+
+    public void attack1(Pokemon enemy) {
+    	move  = attack1;
+    	if(enemy.getType().equals("Fire")) {
+    		attackratio = 20;
+    		enemy.hurt(attackratio);
+    	}
+    	else
+    		attackratio = 5;
+    	    enemy.hurt(attackratio);
+	}
+	
+	public void attack2(Pokemon enemy) {
+		move  = attack2;
+	}
+	
+	public void attack3(Pokemon enemy) {
+		move  = attack3;
+	}
+	
+	public void attack4(Pokemon enemy) {
+		move  = attack4;
+	}
+
+	public void swap(Pokemon other) {
+		
+	}
+
+	public void forfeit() {
+		
+	}
+
+	public void tick() {
+			
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(squirtle, (int) x, (int) y, null);
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public int getAttackRatio() {
+		return attackratio;
+	}
+
+	@Override
+	public String getAttack1() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAttack2() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAttack3() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAttack4() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getEffectiveness() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getMove() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
